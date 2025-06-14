@@ -1,6 +1,10 @@
+"use client";
+import { useSession } from "next-auth/react";
 import CustomLink from "./custom-link";
 
 export default function ClientExample() {
+  const { data: session, status } = useSession();
+  console.log(session);
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-3xl font-bold">クライアントサイドレンダリング</h1>
@@ -26,6 +30,13 @@ export default function ClientExample() {
         </CustomLink>
         コンポーネントが必要です。
       </p>
+      <pre className="py-6 px-4 whitespace-pre-wrap break-all">
+        {status === "loading" ? (
+          <div>loading...</div>
+        ) : (
+          <>{JSON.stringify(session, null, 2)}</>
+        )}
+      </pre>
     </div>
   );
 }
